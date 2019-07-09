@@ -46,7 +46,7 @@ describe "Clone" do
 
       it "should clone a cloned document" do
         expect { @doc.clone.clone }.to_not raise_error
-        @doc.clone.clone.id.should be_a BSON::ObjectId
+        @doc.clone.clone.id.should be_a BSONV1::ObjectId
       end
     end
   end

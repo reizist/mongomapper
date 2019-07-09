@@ -112,7 +112,7 @@ describe "Key" do
     subject { @key }
 
     it "should cast each element correctly" do
-      ids = [BSON::ObjectId.new, BSON::ObjectId.new, BSON::ObjectId.new.to_s, BSON::ObjectId.new.to_s]
+      ids = [BSONV1::ObjectId.new, BSONV1::ObjectId.new, BSONV1::ObjectId.new.to_s, BSONV1::ObjectId.new.to_s]
       subject.set(ids).should == ids.map { |id| ObjectId.to_mongo(id) }
     end
   end
@@ -137,7 +137,7 @@ describe "Key" do
     subject { @key }
 
     it "should cast each element correctly" do
-      ids = [BSON::ObjectId.new, BSON::ObjectId.new, BSON::ObjectId.new.to_s, BSON::ObjectId.new.to_s]
+      ids = [BSONV1::ObjectId.new, BSONV1::ObjectId.new, BSONV1::ObjectId.new.to_s, BSONV1::ObjectId.new.to_s]
       subject.set(ids).should == ids.map { |id| ObjectId.to_mongo(id) }
     end
   end
@@ -240,7 +240,7 @@ describe "Key" do
       end
 
       it "should return default value if name is _id and value nil" do
-        id = BSON::ObjectId.new
+        id = BSONV1::ObjectId.new
         key = Key.new(:_id, ObjectId, :default => lambda { id })
         key.get(nil).should == id
       end

@@ -33,7 +33,7 @@ describe "Caching" do
 
   context "not new" do
     before do
-      @object_id = BSON::ObjectId.new
+      @object_id = BSONV1::ObjectId.new
       @doc = @klass.new
       allow(@doc).to receive(:persisted).and_return(true)
       allow(@doc).to receive(:id).and_return(@object_id)

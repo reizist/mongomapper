@@ -37,7 +37,7 @@ describe "Scopes" do
 
       # Regression test for #534
       context "when where() is invoked via a scope before a key is defined" do
-        let(:given_id) { BSON::ObjectId.new }
+        let(:given_id) { BSONV1::ObjectId.new }
         let(:doc) { Doc {
            key :type, String
 

@@ -61,13 +61,13 @@ describe "Safe" do
 
       it "should raise an error on duplicate IDs" do
         k = @klass.create
-        expect { j = @klass.create(:_id => k.id) }.to raise_error(Mongo::OperationFailure)
+        expect { j = @klass.create(:_id => k.id) }.to raise_error(MongoV1::OperationFailure)
       end
 
       context "using safe setting from class" do
         it "should pass :w => 1 option to save" do
           instance = @klass.new(:email => 'john@doe.com')
-          expect_any_instance_of(Mongo::Collection).to receive(:insert).once.with({'_id' => instance.id, 'email' => 'john@doe.com'}, {:w => 1})
+          expect_any_instance_of(MongoV1::Collection).to receive(:insert).once.with({'_id' => instance.id, 'email' => 'john@doe.com'}, {:w => 1})
           instance.save!
         end
 
@@ -82,7 +82,7 @@ describe "Safe" do
             2.times do
               @klass.new(:email => 'john@doe.com').save
             end
-          }.to raise_error(Mongo::OperationFailure)
+          }.to raise_error(MongoV1::OperationFailure)
         end
       end
 
@@ -92,7 +92,7 @@ describe "Safe" do
             2.times do
               @klass.new(:email => 'john@doe.com').save(:safe => true)
             end
-          }.to raise_error(Mongo::OperationFailure)
+          }.to raise_error(MongoV1::OperationFailure)
         end
 
         it "should not raise error if safe is false" do
@@ -122,7 +122,7 @@ describe "Safe" do
       context "using safe setting from class" do
         it "should pass :safe => options_hash to save" do
           instance = @klass.new(:email => 'john@doe.com')
-          expect_any_instance_of(Mongo::Collection).to receive(:insert).once.with({'_id' => instance.id, 'email' => 'john@doe.com'}, {:j => true})
+          expect_any_instance_of(MongoV1::Collection).to receive(:insert).once.with({'_id' => instance.id, 'email' => 'john@doe.com'}, {:j => true})
           instance.save!
         end
 
@@ -137,7 +137,7 @@ describe "Safe" do
             2.times do
               @klass.new(:email => 'john@doe.com').save
             end
-          }.to raise_error(Mongo::OperationFailure)
+          }.to raise_error(MongoV1::OperationFailure)
         end
       end
 
@@ -147,7 +147,7 @@ describe "Safe" do
             2.times do
               @klass.new(:email => 'john@doe.com').save(:safe => true)
             end
-          }.to raise_error(Mongo::OperationFailure)
+          }.to raise_error(MongoV1::OperationFailure)
         end
 
         it "should not raise error if safe is false" do

@@ -96,7 +96,7 @@ describe "BelongsToProxy" do
   end
 
   it "should return nil if id set but document not found" do
-    id = BSON::ObjectId.new
+    id = BSONV1::ObjectId.new
     @comment_class.new(:name => 'Foo', :post_id => id).post.nil?.should be_truthy
   end
 

@@ -16,7 +16,7 @@ if RUBY_VERSION < "1.9"
     end
   end
 
-  class BSON::OrderedHash
+  class BSONV1::OrderedHash
     extend MongoMapper::Extensions::OrderedHash
   end
 end

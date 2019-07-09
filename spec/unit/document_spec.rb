@@ -21,11 +21,11 @@ describe "Document" do
     end
 
     it "should have a connection" do
-      @document.connection.should be_instance_of(Mongo::MongoClient)
+      @document.connection.should be_instance_of(MongoV1::MongoClient)
     end
 
     it "should allow setting different connection without affecting the default" do
-      conn = Mongo::MongoClient.new
+      conn = MongoV1::MongoClient.new
       @document.connection conn
       @document.connection.should == conn
       @document.connection.should_not == MongoMapper.connection
@@ -60,8 +60,8 @@ describe "Document" do
         end
       end
 
-      it "should be an instance of a Mongo::Collection" do
-        @document.collection.should be_instance_of(Mongo::Collection)
+      it "should be an instance of a MongoV1::Collection" do
+        @document.collection.should be_instance_of(MongoV1::Collection)
       end
     end
   end # Document class
@@ -105,7 +105,7 @@ describe "Document" do
     end
 
     it "should create id during initialization" do
-      @document.new._id.should be_instance_of(BSON::ObjectId)
+      @document.new._id.should be_instance_of(BSONV1::ObjectId)
     end
 
     it "should have access to logger" do
@@ -160,7 +160,7 @@ describe "Document" do
 
     context "equality" do
       before do
-        @oid = BSON::ObjectId.new
+        @oid = BSONV1::ObjectId.new
       end
 
       it "should delegate hash to _id" do
@@ -196,7 +196,7 @@ describe "Document" do
       end
 
       it "should not be equal if class same but id different" do
-        (@document.new('_id' => @oid) == @document.new('_id' => BSON::ObjectId.new)).should be(false)
+        (@document.new('_id' => @oid) == @document.new('_id' => BSONV1::ObjectId.new)).should be(false)
       end
 
       it "should not be equal if id same but class different" do

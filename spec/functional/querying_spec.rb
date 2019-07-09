@@ -50,8 +50,8 @@ describe "Querying" do
     end
 
     it "should automatically set id" do
-      doc.id.should be_instance_of(BSON::ObjectId)
-      doc._id.should be_instance_of(BSON::ObjectId)
+      doc.id.should be_instance_of(BSONV1::ObjectId)
+      doc._id.should be_instance_of(BSONV1::ObjectId)
     end
 
     it "should no longer be new?" do
@@ -199,18 +199,18 @@ describe "Querying" do
       end
 
       it "should compact not found when using find" do
-        document.find(@doc1._id, BSON::ObjectId.new.to_s).should == [@doc1]
+        document.find(@doc1._id, BSONV1::ObjectId.new.to_s).should == [@doc1]
       end
 
       it "should raise error if not all found when using find!" do
         expect {
-          document.find!(@doc1._id, BSON::ObjectId.new.to_s)
+          document.find!(@doc1._id, BSONV1::ObjectId.new.to_s)
         }.to raise_error(MongoMapper::DocumentNotFound)
       end
 
       it "should raise error if not all found when using find!" do
         expect {
-          document.find!([@doc1._id, BSON::ObjectId.new.to_s])
+          document.find!([@doc1._id, BSONV1::ObjectId.new.to_s])
         }.to raise_error(MongoMapper::DocumentNotFound)
       end
 
@@ -688,7 +688,7 @@ describe "Querying" do
     end
 
     it "should assign an id for the document" do
-      @doc.id.should be_instance_of(BSON::ObjectId)
+      @doc.id.should be_instance_of(BSONV1::ObjectId)
     end
 
     it "should save attributes" do
@@ -782,7 +782,7 @@ describe "Querying" do
     end
 
     it "should assign an id for the document" do
-      @doc.id.should be_instance_of(BSON::ObjectId)
+      @doc.id.should be_instance_of(BSONV1::ObjectId)
     end
 
     it "should save attributes" do
@@ -887,7 +887,7 @@ describe "Querying" do
       @document.create(:name => 'John')
       expect {
         @document.new(:name => 'John').save(:safe => true)
-      }.to raise_error(Mongo::OperationFailure)
+      }.to raise_error(MongoV1::OperationFailure)
     end
 
     it "should raise argument error if options has unsupported key" do
@@ -908,7 +908,7 @@ describe "Querying" do
       @document.create(:name => 'John')
       expect {
         @document.new(:name => 'John').save!(:safe => true)
-      }.to raise_error(Mongo::OperationFailure)
+      }.to raise_error(MongoV1::OperationFailure)
     end
 
     it "should raise argument error if options has unsupported key" do

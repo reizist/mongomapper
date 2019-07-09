@@ -11,7 +11,7 @@ module MongoMapper
 
       included do
         extend ActiveSupport::DescendantsTracker
-        key :_id, ObjectId, :default => lambda { BSON::ObjectId.new }
+        key :_id, ObjectId, :default => lambda { BSONV1::ObjectId.new }
       end
 
       module ClassMethods
@@ -296,7 +296,7 @@ module MongoMapper
       end
 
       def to_mongo(include_abbreviatons = true)
-        BSON::OrderedHash.new.tap do |attrs|
+        BSONV1::OrderedHash.new.tap do |attrs|
           self.class.unaliased_keys.each do |name, key|
             value = self.read_key(key.name)
             if key.type == ObjectId || !value.nil?

@@ -21,11 +21,11 @@ describe "Support" do
 
   context "Binary.to_mongo" do
     it "should convert to binary if not binary" do
-      Binary.to_mongo('asdfsadasdfs').is_a?(BSON::Binary).should be_truthy
+      Binary.to_mongo('asdfsadasdfs').is_a?(BSONV1::Binary).should be_truthy
     end
 
     it "should be binary if binary" do
-      Binary.to_mongo(BSON::Binary.new('asdfsadasdfs')).is_a?(BSON::Binary).should be_truthy
+      Binary.to_mongo(BSONV1::Binary.new('asdfsadasdfs')).is_a?(BSONV1::Binary).should be_truthy
     end
 
     it "should be nil if nil" do
@@ -35,7 +35,7 @@ describe "Support" do
 
   context "Binary.from_mongo" do
     it "should return value" do
-      binary = BSON::Binary.new('asdfasdfasdf')
+      binary = BSONV1::Binary.new('asdfasdfasdf')
       Binary.from_mongo(binary).to_s.should == binary.to_s
     end
   end
@@ -222,7 +222,7 @@ describe "Support" do
     end
 
     it "should return value if object id" do
-      id = BSON::ObjectId.new
+      id = BSONV1::ObjectId.new
       ObjectId.to_mongo(id).should be(id)
     end
 
@@ -239,7 +239,7 @@ describe "Support" do
       Object.from_mongo('21').should == '21'
       Object.from_mongo(9223372036854775807).should == 9223372036854775807
 
-      id = BSON::ObjectId.new
+      id = BSONV1::ObjectId.new
       ObjectId.from_mongo(id).should == id
     end
   end
@@ -372,22 +372,22 @@ describe "Support" do
     end
   end
 
-  context "BSON::ObjectId" do
+  context "BSONV1::ObjectId" do
     context "#as_json" do
       it "should convert object id to string" do
-        id = BSON::ObjectId.new
+        id = BSONV1::ObjectId.new
         id.as_json.should == id.to_s
       end
     end
 
     context "#to_json" do
       it "should convert object id to string" do
-        id = BSON::ObjectId.new
+        id = BSONV1::ObjectId.new
         id.to_json.should == %Q("#{id}")
       end
 
       it "should support ruby driver syntax also" do
-        id = BSON::ObjectId.new
+        id = BSONV1::ObjectId.new
         id.original_to_json.should == %Q({"$oid": "#{id}"})
       end
     end

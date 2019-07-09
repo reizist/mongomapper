@@ -251,17 +251,17 @@ describe "EmbeddedDocument" do
       end
 
       it "should create id during initialization" do
-        @document.new._id.should be_instance_of(BSON::ObjectId)
+        @document.new._id.should be_instance_of(BSONV1::ObjectId)
       end
 
       it "should have id method returns _id" do
-        id = BSON::ObjectId.new
+        id = BSONV1::ObjectId.new
         doc = @document.new(:_id => id)
         doc.id.should == id
       end
 
       it "should convert string object id to mongo object id when assigning id with _id object id type" do
-        id = BSON::ObjectId.new
+        id = BSONV1::ObjectId.new
         doc = @document.new(:id => id.to_s)
         doc._id.should == id
         doc.id.should  == id
@@ -563,7 +563,7 @@ describe "EmbeddedDocument" do
 
       context "equality" do
         before do
-          @oid = BSON::ObjectId.new
+          @oid = BSONV1::ObjectId.new
         end
 
         it "should delegate hash to _id" do
@@ -594,7 +594,7 @@ describe "EmbeddedDocument" do
         end
 
         it "should not be equal if class same but id different" do
-          (@document.new('_id' => @oid) == @document.new('_id' => BSON::ObjectId.new)).should be_falsey
+          (@document.new('_id' => @oid) == @document.new('_id' => BSONV1::ObjectId.new)).should be_falsey
         end
 
         it "should not be equal if id same but class different" do

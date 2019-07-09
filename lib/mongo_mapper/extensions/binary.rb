@@ -3,10 +3,10 @@ module MongoMapper
   module Extensions
     module Binary
       def to_mongo(value)
-        if value.instance_of?(::BSON::Binary)
+        if value.instance_of?(::BSONV1::Binary)
           value
         else
-          value.nil? ? nil : ::BSON::Binary.new(value)
+          value.nil? ? nil : ::BSONV1::Binary.new(value)
         end
       end
 

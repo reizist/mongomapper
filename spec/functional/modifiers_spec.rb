@@ -4,7 +4,7 @@ module Modifiers
   describe "Modifiers" do
     let(:page_class_with_compound_key) {
       Doc do
-        key :_id,         BSON::OrderedHash, :default => lambda { BSON::OrderedHash['n', 42, 'i', BSON::ObjectId.new] }
+        key :_id,         BSONV1::OrderedHash, :default => lambda { BSONV1::OrderedHash['n', 42, 'i', BSONV1::ObjectId.new] }
         key :title,       String
         key :day_count,   Integer, :default => 0
         key :week_count,  Integer, :default => 0
@@ -69,7 +69,7 @@ module Modifiers
           it "should be able to pass safe option" do
             page_class.create(:title => "Better Be Safe than Sorry")
 
-            expect_any_instance_of(Mongo::Collection).to receive(:update).with(
+            expect_any_instance_of(MongoV1::Collection).to receive(:update).with(
               {:title => "Better Be Safe than Sorry"},
               {'$unset' => {:tags => 1}},
               {:w => 1, :multi => true}
@@ -176,7 +176,7 @@ module Modifiers
         it "should not typecast keys that are not defined in document" do
           expect {
             page_class.set(page.id, :colors => ['red', 'green'].to_set)
-          }.to raise_error(BSON::InvalidDocument)
+          }.to raise_error(BSONV1::InvalidDocument)
         end
 
         it "should set keys that are not defined in document" do
@@ -196,7 +196,7 @@ module Modifiers
           it "should be able to pass safe option" do
             page_class.create(:title => "Better Be Safe than Sorry")
 
-            expect_any_instance_of(Mongo::Collection).to receive(:update).with(
+            expect_any_instance_of(MongoV1::Collection).to receive(:update).with(
               {:title => "Better Be Safe than Sorry"},
               {'$set' => {:title => "I like safety."}},
               {:w => 1, :multi => true}
@@ -387,7 +387,7 @@ module Modifiers
           # We are trying to increment a key of type string here which should fail
           expect {
             page_class.increment({:title => "Better Be Safe than Sorry"}, {:title => 1}, {:safe => true})
-          }.to raise_error(Mongo::OperationFailure)
+          }.to raise_error(MongoV1::OperationFailure)
         end
 
         it "should be able to pass both safe and upsert options" do
@@ -533,7 +533,7 @@ module Modifiers
             # We are trying to increment a key of type string here which should fail
             expect {
               page.increment({:title => 1}, {:safe => true})
-            }.to raise_error(Mongo::OperationFailure)
+            }.to raise_error(MongoV1::OperationFailure)
           end
 
           it "should be able to pass upsert and safe options" do

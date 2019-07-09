@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Single collection inheritance (document)" do
   context "without a connection", :without_connection => true do
     it "should attempt to create a connection during inheritance" do
-      expect(Mongo::MongoClient).to_not receive(:new)
+      expect(MongoV1::MongoClient).to_not receive(:new)
       doc = Class.new
       doc.send(:include, MongoMapper::Document)
       expect {
@@ -17,7 +17,7 @@ describe "Single collection inheritance (document)" do
       klass = Class.new(doc)
       klass.connection.should be_nil
       MongoMapper.connection
-      klass.connection.should be_a Mongo::MongoClient
+      klass.connection.should be_a MongoV1::MongoClient
     end
   end
 
@@ -61,7 +61,7 @@ describe "Single collection inheritance (document)" do
     it "should use the same connection in the subclass" do
       parent_class = Class.new do
         include MongoMapper::Document
-        connection Mongo::MongoClient.new
+        connection MongoV1::MongoClient.new
       end
 
       child_class = Class.new(parent_class) do
@@ -371,7 +371,7 @@ describe "Single collection inheritance (document)" do
     it "should find polymorphic SCI items" do
       item = TextGalleryItem.new()
       p = SciPolymorphicPost.create(:article_parent => item)
-      p.article_parent_id.should be_a BSON::ObjectId
+      p.article_parent_id.should be_a BSONV1::ObjectId
       p.article_parent_type.should == "TextGalleryItem"
 
       p.reload.article_parent.sci_polymorphic_posts.all.should include(p)

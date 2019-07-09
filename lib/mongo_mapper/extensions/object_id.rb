@@ -17,7 +17,7 @@ class ObjectId
   extend MongoMapper::Extensions::ObjectId
 end
 
-class BSON::ObjectId
+class BSONV1::ObjectId
   alias_method :original_to_json, :to_json
 
   def as_json(options=nil)

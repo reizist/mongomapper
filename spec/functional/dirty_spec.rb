@@ -128,7 +128,7 @@ describe "Dirty" do
     it "should be false if the same ObjectId was assigned in String format" do
       @document.key :doc_id, ObjectId
 
-      doc = @document.create!(:doc_id => BSON::ObjectId.new)
+      doc = @document.create!(:doc_id => BSONV1::ObjectId.new)
       doc.changed?.should be_falsey
       doc.doc_id = doc.doc_id.to_s
       doc.changed?.should be_falsey

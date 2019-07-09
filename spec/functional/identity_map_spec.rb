@@ -14,12 +14,12 @@ describe "IdentityMap" do
   end
 
   def expect_no_queries
-    expect_any_instance_of(Mongo::Collection).to receive(:find_one).never
-    expect_any_instance_of(Mongo::Collection).to receive(:find).never
+    expect_any_instance_of(MongoV1::Collection).to receive(:find_one).never
+    expect_any_instance_of(MongoV1::Collection).to receive(:find).never
   end
 
   def expects_one_query
-    expect_any_instance_of(Mongo::Collection).to receive(:find_one).once.and_return({})
+    expect_any_instance_of(MongoV1::Collection).to receive(:find_one).once.and_return({})
   end
 
   def clear_identity_map
@@ -165,7 +165,7 @@ describe "IdentityMap" do
 
     context "#load" do
       before do
-        @id = BSON::ObjectId.new
+        @id = BSONV1::ObjectId.new
       end
 
       it "should add document to map" do
@@ -365,7 +365,7 @@ describe "IdentityMap" do
 
       it "should return nil for document id not found in collection" do
         assert_in_map(@person)
-        @person_class.find_by_id(BSON::ObjectId.new).should be_nil
+        @person_class.find_by_id(BSONV1::ObjectId.new).should be_nil
       end
     end
 
@@ -405,7 +405,7 @@ describe "IdentityMap" do
       end
 
       it "should return nil if not found" do
-        @person_class.fields(:name).find(BSON::ObjectId.new).should be_nil
+        @person_class.fields(:name).find(BSONV1::ObjectId.new).should be_nil
       end
     end
 

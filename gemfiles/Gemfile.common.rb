@@ -10,10 +10,11 @@ end
 gem 'rest-client', '1.6.7'
 
 platforms :ruby do
-  gem 'mongo',     '~> 1.9'
-  gem 'bson_ext',  '~> 1.9'
+  gem 'mongov1',     '~> 1.9', git: 'https://github.com/dressipi/mongo-ruby-driver.git', branch: 'rename-legacy-mongo'
+  gem 'bsonv1_ext',  '~> 1.9', git: 'https://github.com/dressipi/mongo-ruby-driver.git', branch: 'rename-legacy-mongo'
 end
 
+gem 'plucky', git:  'https://github.com/fcheung/plucky.git', branch: 'use-legacy-mongo'
 platforms :rbx do
   gem "rubysl"
 end

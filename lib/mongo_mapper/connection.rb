@@ -10,7 +10,7 @@ module MongoMapper
 
     # @api public
     def connection
-      @@connection ||= Mongo::MongoClient.new
+      @@connection ||= MongoV1::MongoClient.new
     end
 
     def connection?
@@ -79,14 +79,14 @@ module MongoMapper
       end
 
       MongoMapper.connection = if env.key?('hosts')
-        klass = (env.key?("mongos") || env.key?("sharded")) ? Mongo::MongoShardedClient : Mongo::MongoReplicaSetClient
+        klass = (env.key?("mongos") || env.key?("sharded")) ? MongoV1::MongoShardedClient : MongoV1::MongoReplicaSetClient
         if env['hosts'].first.is_a?(String)
           klass.new( env['hosts'], options )
         else
           klass.new( *env['hosts'].push(options) )
         end
       else
-        Mongo::MongoClient.new(env['host'], env['port'], options)
+        MongoV1::MongoClient.new(env['host'], env['port'], options)
       end
 
       MongoMapper.database = env['database']

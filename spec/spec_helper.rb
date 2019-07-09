@@ -66,7 +66,7 @@ log_dir = File.expand_path('../../log', __FILE__)
 FileUtils.mkdir_p(log_dir) unless File.exist?(log_dir)
 logger = Logger.new(log_dir + '/test.log')
 
-MongoMapper.connection = Mongo::MongoClient.new('127.0.0.1', 27017, :logger => logger)
+MongoMapper.connection = MongoV1::MongoClient.new('127.0.0.1', 27017, :logger => logger)
 MongoMapper.database = "test"
 MongoMapper.database.collections.each { |c| c.drop_indexes }
 Dir[File.dirname(__FILE__) + "/support/**/*.rb"].each {|f| require f}
