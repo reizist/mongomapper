@@ -8,7 +8,7 @@ module MongoMapper
         include DynamicQuerying::ClassMethods
 
         def delete(*ids)
-          where(:_id => ids.flatten).remove
+          where(:_id => {'$in' => ids.flatten}).remove
         end
 
         def delete_all(options = {})

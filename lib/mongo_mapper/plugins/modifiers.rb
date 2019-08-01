@@ -31,7 +31,7 @@ module MongoMapper
           else
             keys, ids = args.partition { |arg| arg.is_a?(Symbol) }
             options = ids.last.is_a?(Hash) ? ids.pop : {}
-            criteria = {:id => ids}
+            criteria = {:id => {'$in': ids}}
           end
 
           criteria = criteria_hash(criteria).to_hash

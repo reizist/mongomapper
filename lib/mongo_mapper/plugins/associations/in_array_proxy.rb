@@ -109,7 +109,7 @@ module MongoMapper
         end
 
         def criteria
-          {:_id => ids}
+          {:_id => {'$in': ids}}
         end
 
         def scoped_ids(args)
