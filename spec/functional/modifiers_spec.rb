@@ -61,7 +61,7 @@ module Modifiers
         context "additional options (upsert & safe)" do
           it "should be able to pass upsert option" do
             new_key_value = DateTime.now.to_s
-            page_class.unset({:title => new_key_value, :tags => %w(foo bar)}, :tags, {:upsert => true})
+            page_class.unset({:title => new_key_value, :tags => {'$in' => %w(foo bar)}}, :tags, {:upsert => true})
             page_class.count(:title => new_key_value).should == 1
             page_class.first(:title => new_key_value).tags.should == []
           end
@@ -79,7 +79,7 @@ module Modifiers
 
           it "should be able to pass both safe and upsert options" do
             new_key_value = DateTime.now.to_s
-            page_class.unset({:title => new_key_value, :tags => %w(foo bar)}, :tags, {:upsert => true, :safe => true})
+            page_class.unset({:title => new_key_value, :tags => {'$in' => %w(foo bar)}}, :tags, {:upsert => true, :safe => true})
             page_class.count(:title => new_key_value).should == 1
             page_class.first(:title => new_key_value).tags.should == []
           end

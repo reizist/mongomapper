@@ -339,7 +339,7 @@ describe "IdentityMap" do
         person3 = @person_class.create(:name => 'Jesse')
         clear_identity_map
 
-        people = @person_class.all(:_id => [person1.id, person2.id, person3.id])
+        people = @person_class.all(:_id => {'$in': [person1.id, person2.id, person3.id]})
         assert_in_map(people)
       end
 
@@ -352,7 +352,7 @@ describe "IdentityMap" do
         assert_not_in_map(person1)
         assert_in_map(person2, person3)
 
-        people = @person_class.all(:_id => [person1.id, person2.id, person3.id])
+        people = @person_class.all(:_id => {'$in': [person1.id, person2.id, person3.id]})
         # people.first is making sure one that wasn't mapped now is
         assert_in_map(people.first, person2, person3)
       end

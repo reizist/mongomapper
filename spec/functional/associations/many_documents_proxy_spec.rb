@@ -23,7 +23,7 @@ describe "ManyDocumentsProxy" do
       end
 
       def self.all_from_param(names)
-        where(:name => names).all
+        where(:name => {'$in' => names}).all
       end
     end
 

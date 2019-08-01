@@ -121,7 +121,7 @@ class Project
   many :collaborators, :extend => CollaboratorsExtensions
   many :statuses, :order => 'position' do
     def open
-      all(:name => %w(New Assigned))
+      all(:name => {'$in': %w(New Assigned)})
     end
   end
 

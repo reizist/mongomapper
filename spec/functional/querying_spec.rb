@@ -381,7 +381,7 @@ describe "Querying" do
     end
 
     it "should convert the conditions to mongo criteria" do
-      document.delete_all(:age => [26, 27])
+      document.delete_all(:age => {'$in': [26, 27]})
       document.count.should == 1
     end
   end
@@ -442,7 +442,7 @@ describe "Querying" do
     end
 
     it "should convert the conditions to mongo criteria" do
-      document.destroy_all(:age => [26, 27])
+      document.destroy_all(:age => {'$in': [26, 27]})
       document.count.should == 1
     end
   end
@@ -476,7 +476,7 @@ describe "Querying" do
     end
 
     it "should convert the conditions to mongo criteria" do
-      document.count(:age => [26, 27]).should == 2
+      document.count(:age => {'$in': [26, 27]}).should == 2
     end
   end
 
