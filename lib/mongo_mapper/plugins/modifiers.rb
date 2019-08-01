@@ -94,7 +94,11 @@ module MongoMapper
             options  = args[2]
           else
             criteria, (updates, options) = args.partition { |a| !a.is_a?(Hash) }
-            criteria = { :id => criteria }
+            if criteria.length == 1
+              criteria = { :id => criteria.first }
+            else
+              criteria = { :id => {'$in': criteria}}
+            end
           end
           upgrade_legacy_safe_usage!(options)
           updates = dealias_keys updates
