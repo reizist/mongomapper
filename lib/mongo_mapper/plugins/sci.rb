@@ -68,7 +68,13 @@ module MongoMapper
 
         def query(options={})
           super.tap do |query|
-            query[:_type] = {'$in' => [name] + descendants.map(&:name)} if single_collection_inherited?
+            if single_collection_inherited?
+              if descendants.any?
+                query[:_type] = {'$in' => [name] + descendants.map(&:name)}
+              else
+                query[:_type] = name
+              end
+            end
           end
         end
       end
