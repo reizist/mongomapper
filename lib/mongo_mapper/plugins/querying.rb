@@ -48,7 +48,7 @@ module MongoMapper
 
         # @api private for now
         def query(options={})
-        binding.pry
+        binding.pry if self.class_name == 'User'
           query = MongoMapper::Plugins::Querying::DecoratedPluckyQuery.new(collection, :transformer => transformer)
           query.object_ids(object_id_keys)
           query.amend(options)
